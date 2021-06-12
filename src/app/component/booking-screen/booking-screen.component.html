@@ -1,0 +1,70 @@
+<div class="container">
+    <h4 class="mb-4" style="    border: 2px solid red;
+    padding: 2px 10px;">Selected Movie:Selmon Bhoi</h4>
+    <form [formGroup]="eventForm">
+    <div class="row">
+        <div class="col-md-4">
+            <label>Username</label>
+            <input type="text" formControlName="name" class="todo-input" placeholder="Enter Username">
+            <ng-container *ngIf="submitted && f.name.errors">
+                <p class="error-message">
+                 Username is required
+                </p>
+              </ng-container>
+        </div>
+        <div class="col-md-4">
+            <label>Phone</label>
+            <input type="number" min="1" formControlName="phone" class="todo-input" placeholder="Enter Number">
+            <ng-container *ngIf="submitted && f.phone.errors">
+                <p class="error-message" *ngIf="f.phone.errors.required">
+                 Phone is required
+                </p>
+              </ng-container>
+        </div>
+        <div class="col-md-4">
+            <label>Email</label>
+            <input type="text" formControlName="email" class="todo-input" placeholder="Enter Email">
+            <ng-container *ngIf="submitted && f.email.errors">
+                <p class="error-message" *ngIf="f.email.errors.required">
+                 Email is required
+                </p>
+                <p class="error-message" *ngIf="f.email.errors.email">
+                    Email is invalid
+                   </p>
+              </ng-container>
+        </div>
+        </div>
+        <div class="row">
+        <div class="ml-3">
+            <label>Cinema</label>
+            <select class="form-control" formControlName="cinema" class="todo-input" style="width:100%" (change)="OnCatChange($event)">
+                <option *ngFor="let cin of cinemaList" value="{{cin._id.$oid}}">{{cin.cinemaTitle}}</option>
+              </select>
+              <ng-container *ngIf="submitted && f.cinema.errors">
+                <p class="error-message">
+                 Cinema is required
+                </p>
+              </ng-container>
+              <label>Screens</label>
+              <select class="form-control" formControlName="screen"  class="todo-input" style="width:100%" (change)="OnScrChange($event)">
+                  <option *ngFor="let sin of screens" value="{{sin._id.$oid}}">{{sin.screenTitle}}</option>
+                </select>
+                <ng-container *ngIf="submitted && f.screen.errors">
+                  <p class="error-message">
+                   Sceens is required
+                  </p>
+                </ng-container>
+            <label>Time</label>
+            <select class="form-control" formControlName="time" class="todo-input" style="width:100%">
+                <option *ngFor="let tim of timeSlot" [value]="tim._id.$oid">{{tim.startAt}} -{{tim.endAt}}</option>
+              </select>
+              <ng-container *ngIf="submitted && f.time.errors">
+                <p class="error-message">
+                 Time is required
+                </p>
+              </ng-container>
+            <button class="btn btn-primary" (click)="submitBook()">Book</button>
+        </div>
+    </div>
+</form>
+</div>

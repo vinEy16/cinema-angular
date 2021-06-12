@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="row">
+    <h2>Search Movies</h2>
+
+    <form [formGroup]="movieForm" (ngSubmit)="onSubmit()">
+      <input
+        type="text"
+        formControlName="movieTitle"
+        class="todo-input"
+        placeholder="Enter Movie Name"
+      />
+      <button type="submit">Search</button>
+    </form>
+  </div>
+</div>
+
+<div class="todo-item" *ngFor="let movie of moviesList">
+  <div class="todo-item-left">
+    <div class="todo-item-label">
+      <button (click)="selectMovie(todo.id)">
+        <h4>
+          {{ movie.movieTitle }}
+        </h4>
+        <p class="pdescp">{{ movie.movieDescription }}</p>
+      </button>
+    </div>
+  </div>
+</div>
