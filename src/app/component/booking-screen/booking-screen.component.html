@@ -30,7 +30,10 @@
         />
         <ng-container *ngIf="submitted && f.contact.errors">
           <p class="error-message" *ngIf="f.contact.errors.required">
-            Phone is required
+            Contact is required
+          </p>
+          <p class="error-message" *ngIf="f.contact.errors.pattern">
+            Contact is invalid
           </p>
         </ng-container>
       </div>
@@ -84,8 +87,8 @@
             </p>
           </option>
         </select>
-        <ng-container *ngIf="submitted && f.screen.errors">
-          <p class="error-message">Sceens is required</p>
+        <ng-container *ngIf="submitted && f.showId.errors">
+          <p class="error-message">Screen is required</p>
         </ng-container>
         <button class="btn btn-primary" type="submit">Book</button>
       </div>

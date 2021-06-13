@@ -37,7 +37,6 @@ export class BookingScreenComponent implements OnInit {
           .get(this.baseUrl + `api/movies/${res.id}`)
           .subscribe((response: any) => {
             this.movie = response;
-            console.log(`###############`, response);
           });
         let params = new HttpParams();
         params = params.append('search', `movieIds;${res.id};in`);
@@ -62,7 +61,7 @@ export class BookingScreenComponent implements OnInit {
     this.bookingForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      contact: ['', [Validators.required]],
+      contact: ['', [Validators.required,Validators.pattern("[0-9 ]{10}")]],
       cinema: ['', [Validators.required]],
       showId: ['', [Validators.required]],
     });
@@ -78,33 +77,26 @@ export class BookingScreenComponent implements OnInit {
         movieId: this.movie._id,
         cinemaId: event.target.value,
       })
-      .subscribe((response: any) => {
-        this.screens = response;
-      });
+      .subscribe(
+        (response: any) => {
+          this.screens = response;
+        },
+      );
   }
 
   onSubmit() {
     this.submitted = true;
-    console.log(`###########`, this.bookingForm.value);
     if (this.bookingForm.invalid) {
       return;
     }
-    // const formData = new FormData();
-
-    // formData.append('name', this.f.name.value);
-    // formData.append('email', this.f.email.value);
-    // formData.append('contact', this.f.phone.value);
-    // formData.append('showId', this.f.time.value);
-    // formData.append('screenId', this.f.screen.value);
-    // formData.append('cinemaId', this.f.cinema.value);
-    // formData.append('movieId', this.route.queryParams['_value'].id);
-
-    // this.http.post(this.baseUrl+`api/showTime`,formData).subscribe((response:any)=>{
-    // this.bookingForm.reset();
-    // alert('Booking Confirmed');
-    // this.Router.navigate(['/'])
-    // })
-    alert('Booking Confirmed');
-    this.Router.navigate(['/']);
+    const data = this.bookingForm.value;
+    delete data.cinema;
+    this.http
+      .post(this.baseUrl + `api/bookings`, data)
+      .subscribe((response: any) => {
+        this.bookingForm.reset();
+        alert('Booking Confirmed');
+        this.Router.navigate(['/']);
+      });
   }
 }
