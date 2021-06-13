@@ -13,7 +13,7 @@
         <input
           type="text"
           formControlName="name"
-          class="todo-input"
+          class="book-input"
           placeholder="Enter Username"
         />
         <ng-container *ngIf="submitted && f.name.errors">
@@ -25,7 +25,7 @@
         <input
           type="text"
           formControlName="contact"
-          class="todo-input"
+          class="book-input"
           placeholder="Enter Number"
         />
         <ng-container *ngIf="submitted && f.contact.errors">
@@ -42,7 +42,7 @@
         <input
           type="text"
           formControlName="email"
-          class="todo-input"
+          class="book-input"
           placeholder="Enter Email"
         />
         <ng-container *ngIf="submitted && f.email.errors">
@@ -61,7 +61,7 @@
         <select
           class="form-control"
           formControlName="cinema"
-          class="todo-input"
+          class="book-input"
           style="width: 100%"
           (change)="OnCinemaSelect($event)"
         >
@@ -77,7 +77,7 @@
         <select
           class="form-control"
           formControlName="showId"
-          class="todo-input"
+          class="book-input"
           style="width: 100%"
         >
           <option *ngFor="let scr of screens" value="{{ scr._id }}">

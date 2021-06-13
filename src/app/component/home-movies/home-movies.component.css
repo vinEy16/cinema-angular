@@ -1,4 +1,4 @@
-.todo-input {
+.movie-input {
     width: 100%;
     padding: 10px 18px;
     font-size: 18px;
@@ -6,7 +6,7 @@
 
   }
   
-  .todo-item {
+  .movie-item {
     margin-bottom: 12px;
     display: inline-table;
     align-items: center;
@@ -14,24 +14,18 @@
     animation-duration: 0.3s;
   }
   
-  .remove-item {
-    cursor: pointer;
-    margin-left: 14px;
-   
-  }
-  
-  .todo-item-left { 
+  .movie-item-left { 
     display: flex;
     align-items: center;
   }
   
-  .todo-item-label {
+  .movie-item-label {
     padding: 10px;
     border: 1px solid white;
     margin-left: 137px;
   }
   
-  .todo-item-edit {
+  .movie-item-edit {
     font-size: 24px;
     color: #2c3e50;
     margin-left: 12px;
@@ -40,33 +34,3 @@
     border: 1px solid #ccc; 
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
   }
-  
-  .completed {
-    text-decoration: line-through;
-    color: grey;
-  }
-  
-  .extra-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 16px;
-    border-top: 1px solid lightgrey;
-    padding-top: 14px;
-    margin-bottom: 14px;
-  }
-
-  .pdescp{
-    font-size: 18px;
-    color: blue;
-    border: 3px solid;
-    padding: 3px 53px;
-  }
-
-
-.movie_sp {
-    float: left;
-    padding: 2px 8px;
-    border: 2px solid blue;
-    border-radius: 21px;
-}

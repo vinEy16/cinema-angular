@@ -6,7 +6,7 @@
       <input
         type="text"
         formControlName="movieTitle"
-        class="todo-input"
+        class="movie-input"
         placeholder="Enter Movie Name"
       />
       <button type="submit">Search</button>
@@ -14,9 +14,9 @@
   </div>
 </div>
 
-<div class="todo-item" *ngFor="let movie of moviesList">
-  <div class="todo-item-left">
-    <div class="todo-item-label">
+<div class="movie-item" *ngFor="let movie of moviesList">
+  <div class="movie-item-left">
+    <div class="movie-item-label">
       <button (click)="selectMovie(movie._id)">
         <h4>
           {{ movie.movieTitle }}
@@ -26,6 +26,6 @@
     </div>
   </div>
 </div>
-<div class="todo-item" *ngIf="noMovieFound">
+<div class="movie-item" *ngIf="noMovieFound">
   <h1>No Movie Found!!</h1>
 </div>
