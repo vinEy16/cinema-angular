@@ -17,89 +17,10 @@ import {
 export class BookingScreenComponent implements OnInit {
   baseUrl = environment.baseUrl;
   submitted = false;
-  eventForm: FormGroup;
-  cinemaList = [];
-  staticCinema = [
-    {
-      _id: {
-        $oid: '60c4c0c6e5453b3048106b1c',
-      },
-      movieIds: [
-        '60c4b56c78d7334ee8b15371',
-        '60c4b5ab78d7334ee8b15372',
-        '60c4b5c778d7334ee8b15373',
-      ],
-      cinemaTitle: 'Elante Mall',
-      cinemaDescription: 'Elante Mall',
-      __v: 0,
-    },
-    {
-      _id: {
-        $oid: '60c4c0d9e5453b3048106b1d',
-      },
-      movieIds: [
-        '60c4b56c78d7334ee8b15371',
-        '60c4b5ab78d7334ee8b15372',
-        '60c4b5c778d7334ee8b15373',
-      ],
-      cinemaTitle: 'Picaadly',
-      cinemaDescription: 'Picaadly',
-      __v: 0,
-    },
-  ];
-  timeSlot = [];
-  timeStatic = [
-    {
-      _id: {
-        $oid: '60c4c7f579bb9439ec4ca898',
-      },
-      houseFull: false,
-      startAt: '11:00 AM',
-      endAt: '2:00PM',
-      movieId: '60c4b56c78d7334ee8b15371',
-      cinemaId: '60c4c0c6e5453b3048106b1c',
-      screenId: '60c4c52ae5453b3048106b1f',
-      __v: 0,
-    },
-    {
-      _id: {
-        $oid: '60c4c83479bb9439ec4ca899',
-      },
-      houseFull: false,
-      startAt: '11:00 AM',
-      endAt: '2:00PM',
-      movieId: '60c4b5ab78d7334ee8b15372',
-      cinemaId: '60c4c0c6e5453b3048106b1c',
-      screenId: '60c4c52ae5453b3048106b1f',
-      __v: 0,
-    },
-  ];
-  screens = [];
-  screenStatic = [
-    {
-      _id: {
-        $oid: '60c4c7f579bb9439ec4ca898',
-      },
-      houseFull: false,
-      screenTitle: 'Screen1',
-      movieId: '60c4b56c78d7334ee8b15371',
-      cinemaId: '60c4c0c6e5453b3048106b1c',
-      screenId: '60c4c52ae5453b3048106b1f',
-      __v: 0,
-    },
-    {
-      _id: {
-        $oid: '60c4c83479bb9439ec4ca899',
-      },
-      houseFull: false,
-      screenTitle: 'Screen2',
-      movieId: '60c4b5ab78d7334ee8b15372',
-      cinemaId: '60c4c0c6e5453b3048106b1c',
-      screenId: '60c4c52ae5453b3048106b1f',
-      __v: 0,
-    },
-  ];
-
+  bookingForm: FormGroup;
+  cinemaList;
+  screens: any = [];
+  movie;
   constructor(
     private route: ActivatedRoute,
     private Router: Router,
@@ -112,66 +33,74 @@ export class BookingScreenComponent implements OnInit {
         return;
       }
       if (res.id) {
-        this.cinemaList = this.staticCinema;
-
-        // this.http.get(this.baseUrl+`api/cinema/${res.id}`).subscribe((response:any)=>{
-        //   this.cinemaList = response.data;
-        // })
+        this.http
+          .get(this.baseUrl + `api/movies/${res.id}`)
+          .subscribe((response: any) => {
+            this.movie = response;
+            console.log(`###############`, response);
+          });
+        let params = new HttpParams();
+        params = params.append('search', `movieIds;${res.id};in`);
+        this.http
+          .get(this.baseUrl + 'api/cinema', {
+            params: params,
+          })
+          .subscribe((response: any) => {
+            if (response.data && (response.data || []).length) {
+              this.cinemaList = response.data;
+            } else {
+              alert('No cinemas Found !!');
+              this.Router.navigate(['/']);
+            }
+          });
         return;
       }
     });
   }
 
   ngOnInit(): void {
-    this.eventForm = this.formBuilder.group({
+    this.bookingForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required]],
+      contact: ['', [Validators.required]],
       cinema: ['', [Validators.required]],
-      screen: ['', [Validators.required]],
-      time: ['', [Validators.required]],
+      showId: ['', [Validators.required]],
     });
   }
 
   get f() {
-    return this.eventForm.controls;
+    return this.bookingForm.controls;
   }
 
-  OnCatChange(event) {
-    // this.http.get(this.baseUrl+`api/screens/${event.target.value}`).subscribe((response:any)=>{
-    //   this.screens = response.data;
-    // })
-
-    this.screens = this.screenStatic;
+  OnCinemaSelect(event) {
+    this.http
+      .post(this.baseUrl + `api/showTime/getScreenDetails`, {
+        movieId: this.movie._id,
+        cinemaId: event.target.value,
+      })
+      .subscribe((response: any) => {
+        this.screens = response;
+      });
   }
 
-  OnScrChange(event) {
-    // this.http.get(this.baseUrl+`api/showTime/${event.target.value}`).subscribe((response:any)=>{
-    //   this.timeSlot = response.data;
-    // })
-
-    this.timeSlot = this.timeStatic;
-  }
-
-  submitBook() {
+  onSubmit() {
     this.submitted = true;
-
-    if (this.eventForm.invalid) {
+    console.log(`###########`, this.bookingForm.value);
+    if (this.bookingForm.invalid) {
       return;
     }
+    // const formData = new FormData();
 
-    const formData = new FormData();
-
-    formData.append('name', this.f.name.value);
-    formData.append('email', this.f.email.value);
-    formData.append('contact', this.f.phone.value);
-    formData.append('showId', this.f.time.value);
-    formData.append('screenId', this.f.screen.value);
-    formData.append('cinemaId', this.f.cinema.value);
-    formData.append('movieId', this.route.queryParams['_value'].id);
+    // formData.append('name', this.f.name.value);
+    // formData.append('email', this.f.email.value);
+    // formData.append('contact', this.f.phone.value);
+    // formData.append('showId', this.f.time.value);
+    // formData.append('screenId', this.f.screen.value);
+    // formData.append('cinemaId', this.f.cinema.value);
+    // formData.append('movieId', this.route.queryParams['_value'].id);
 
     // this.http.post(this.baseUrl+`api/showTime`,formData).subscribe((response:any)=>{
-    // this.eventForm.reset();
+    // this.bookingForm.reset();
     // alert('Booking Confirmed');
     // this.Router.navigate(['/'])
     // })
