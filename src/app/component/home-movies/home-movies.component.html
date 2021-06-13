@@ -17,12 +17,15 @@
 <div class="todo-item" *ngFor="let movie of moviesList">
   <div class="todo-item-left">
     <div class="todo-item-label">
-      <button (click)="selectMovie(todo.id)">
+      <button (click)="selectMovie(movie._id)">
         <h4>
           {{ movie.movieTitle }}
         </h4>
-        <p class="pdescp">{{ movie.movieDescription }}</p>
+        <p>{{ movie.movieDescription }}</p>
       </button>
     </div>
   </div>
+</div>
+<div class="todo-item" *ngIf="noMovieFound">
+  <h1>No Movie Found!!</h1>
 </div>
