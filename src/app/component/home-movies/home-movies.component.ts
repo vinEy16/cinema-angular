@@ -51,7 +51,7 @@ export class HomeMoviesComponent implements OnInit {
         if (response.data && (response.data || []).length) {
           this.noMovieFound = false;
           this.moviesList = response.data;
-          this.movieForm.reset();
+          // this.movieForm.reset();
         } else {
           this.noMovieFound = true;
         }

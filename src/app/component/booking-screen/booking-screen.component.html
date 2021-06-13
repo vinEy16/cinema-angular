@@ -14,7 +14,7 @@
           type="text"
           formControlName="name"
           class="book-input"
-          placeholder="Enter Username"
+          placeholder="Enter Name"
         />
         <ng-container *ngIf="submitted && f.name.errors">
           <p class="error-message">Name is required</p>
@@ -65,7 +65,7 @@
           style="width: 100%"
           (change)="OnCinemaSelect($event)"
         >
-          <option value="value" selected>Select cinema</option>
+          <option value="" selected>Select Cinema</option>
           <option *ngFor="let cin of cinemaList" value="{{ cin._id }}">
             {{ cin.cinemaTitle }}
           </option>
@@ -80,6 +80,7 @@
           class="book-input"
           style="width: 100%"
         >
+          <option value="" selected>Select Screen</option>
           <option *ngFor="let scr of screens" value="{{ scr._id }}">
             <p>
               Time: {{ scr.startAt }}-{{ scr.endAt }} Screen -

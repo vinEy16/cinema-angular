@@ -1,31 +1,32 @@
 <div class="container">
   <div class="row">
-    <h2>Search Movies</h2>
-
-    <form [formGroup]="movieForm" (ngSubmit)="onSubmit()">
-      <input
-        type="text"
-        formControlName="movieTitle"
-        class="movie-input"
-        placeholder="Enter Movie Name"
-      />
-      <button type="submit">Search</button>
-    </form>
-  </div>
-</div>
-
-<div class="movie-item" *ngFor="let movie of moviesList">
-  <div class="movie-item-left">
-    <div class="movie-item-label">
-      <button (click)="selectMovie(movie._id)">
-        <h4>
-          {{ movie.movieTitle }}
-        </h4>
-        <p>{{ movie.movieDescription }}</p>
-      </button>
+    <div class="col-md-12"><h2>Search Movies</h2></div>
+    <div class="">
+      <form [formGroup]="movieForm" (ngSubmit)="onSubmit()">
+        <input
+          type="text"
+          formControlName="movieTitle"
+          class="movie-input"
+          placeholder="Enter Movie Name"
+        />
+        <button style="float: right" class="btn btn-primary" type="submit">
+          Search
+        </button>
+      </form>
     </div>
   </div>
 </div>
-<div class="movie-item" *ngIf="noMovieFound">
+<ng-container *ngIf="!noMovieFound">
+  <div class="movie-item mt-4 movie-item-left" *ngFor="let movie of moviesList">
+    <div class="movie-item-label">
+      <h4>Movie: {{ movie.movieTitle }}</h4>
+      <p>Description : {{ movie.movieDescription }}</p>
+      <button class="btn btn-primary" (click)="selectMovie(movie._id)">
+        BOOK
+      </button>
+    </div>
+  </div>
+</ng-container>
+<div class="text-center mt-5" *ngIf="noMovieFound">
   <h1>No Movie Found!!</h1>
 </div>

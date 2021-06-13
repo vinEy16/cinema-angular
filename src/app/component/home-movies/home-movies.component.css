@@ -10,6 +10,8 @@
     margin-bottom: 12px;
     display: inline-table;
     align-items: center;
+    border: 5px solid greenyellow;
+    border-radius: 29px;
     justify-content: space-between;
     animation-duration: 0.3s;
   }
